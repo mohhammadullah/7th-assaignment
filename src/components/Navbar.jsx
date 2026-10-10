@@ -17,7 +17,7 @@ const Navbar = () => {
             alt="বাজার দর"
             width={40}
             height={40}
-            className="h-8 w-8 shrink-0 object-contain sm:h-10 sm:w-10"
+            className=" bg-green-800 rounded-2xl p-2h-8 w-8 shrink-0 object-contain sm:h-10 sm:w-10"
           />
 
           <div className="min-w-0">
