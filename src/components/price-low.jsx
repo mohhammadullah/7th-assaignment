@@ -44,7 +44,7 @@ const priceDecreasedProducts = [...products] .filter((item) => item?.change?.dir
           <h2 className="text-xl font-bold text-gray-800">আজ দাম কমেছে</h2>
         </div>
 
-        {/* 6 Products Grid */}
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
           {priceDecreasedProducts.map((item) => {
             const isImageUrl = item.image && item.image.startsWith("http");

@@ -1,9 +1,9 @@
+import { Suspense } from "react";
+import PriceMarquee from "@/components/marquee";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import NavbarWrapper from "@/components/NavbarWrapper";
 import Fotter from "@/components/Fotter";
-import PriceMarquee from "@/components/marquee";
-
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,17 +24,21 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      data-theme='light'
+      data-theme="light"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-<NavbarWrapper />
-         <PriceMarquee />
-      
+        <NavbarWrapper />
+
+
+        <Suspense fallback={null}>
+          <PriceMarquee />
+        </Suspense>
+
         {children}
-      <Fotter></Fotter>
         
-        </body>
+        <Fotter />
+      </body>
     </html>
   );
 }

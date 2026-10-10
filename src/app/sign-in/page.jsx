@@ -1,10 +1,15 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
+import { authClient } from "@/lib/auth-client";
+import toast, { Toaster } from "react-hot-toast";
 
 const SignInPage = () => {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -14,14 +19,70 @@ const SignInPage = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Sign In Submitted:", formData);
+    setLoading(true);
+
+    try {
+      const { data, error } = await authClient.signIn.email(
+        {
+          email: formData.email,
+          password: formData.password,
+        },
+        {
+          onRequest: () => {
+            toast.loading("লগইন হচ্ছে...", { id: "login" });
+          },
+          onSuccess: () => {
+            toast.dismiss("login");
+            toast.success("সফলভাবে লগইন হয়েছে!");
+            router.push("/"); 
+            router.refresh();
+          },
+          onError: (ctx) => {
+            toast.dismiss("login");
+            toast.error(ctx.error.message || "লগইন করতে সমস্যা হয়েছে। দয়া করে আবার চেষ্টা করুন।");
+          },
+        }
+      );
+    } catch (err) {
+      toast.dismiss("login");
+      toast.error("কোথাও কোনো ত্রুটি ঘটেছে।");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
+  const handleGoogleSignIn = async () => {
+    try {
+      await authClient.signIn.social({
+        provider: "google",
+        callbackURL: "/", 
+      });
+    } catch (err) {
+      toast.error("Google দিয়ে লগইন করতে সমস্যা হয়েছে।");
+    }
+  };
+
+
+  const handleGithubSignIn = async () => {
+    try {
+      await authClient.signIn.social({
+        provider: "github",
+        callbackURL: "/",
+      });
+    } catch (err) {
+      toast.error("GitHub দিয়ে লগইন করতে সমস্যা হয়েছে।");
+    }
   };
 
   return (
     <div className="min-h-screen bg-[#f3f5f3] flex flex-col items-center justify-center p-4 font-sans text-gray-800">
-      {/* হেডার অংশ */}
+   
+      <Toaster position="top-center" reverseOrder={false} />
+
       <div className="text-center mb-6">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">
           সাইন ইন
@@ -31,10 +92,8 @@ const SignInPage = () => {
         </p>
       </div>
 
-      {/* মূল কার্ড */}
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 w-full max-w-md">
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* ইমেইল ফিল্ড */}
           <div>
             <label className="block text-sm font-semibold text-gray-800 mb-1">
               ইমেইল
@@ -50,7 +109,6 @@ const SignInPage = () => {
             />
           </div>
 
-          {/* পাসওয়ার্ড ফিল্ড */}
           <div>
             <label className="block text-sm font-semibold text-gray-800 mb-1">
               পাসওয়ার্ড
@@ -66,16 +124,15 @@ const SignInPage = () => {
             />
           </div>
 
-          {/* সাবমিট বাটন */}
           <button
             type="submit"
-            className="w-full mt-2 bg-[#008a3e] hover:bg-[#007534] text-white font-semibold py-3 rounded-lg shadow-md transition duration-200"
+            disabled={loading}
+            className="w-full mt-2 bg-[#008a3e] hover:bg-[#007534] text-white font-semibold py-3 rounded-lg shadow-md transition duration-200 disabled:opacity-50"
           >
-            সাইন ইন
+            {loading ? "অপেক্ষা করুন..." : "সাইন ইন"}
           </button>
         </form>
 
-        {/* ডিভাইডার */}
         <div className="relative my-6 flex items-center justify-center">
           <div className="border-t border-gray-200 w-full"></div>
           <span className="bg-white px-3 text-xs text-gray-500 absolute">
@@ -83,10 +140,10 @@ const SignInPage = () => {
           </span>
         </div>
 
-        {/* সোশাল সাইন ইন বাটন */}
         <div className="grid grid-cols-2 gap-3">
           <button
             type="button"
+            onClick={handleGoogleSignIn}
             className="flex items-center justify-center gap-2 border border-gray-200 rounded-lg py-2.5 text-xs font-semibold text-gray-800 hover:bg-gray-50 transition"
           >
             <FcGoogle className="text-lg" />
@@ -95,6 +152,7 @@ const SignInPage = () => {
 
           <button
             type="button"
+            onClick={handleGithubSignIn}
             className="flex items-center justify-center gap-2 border border-gray-200 rounded-lg py-2.5 text-xs font-semibold text-gray-800 hover:bg-gray-50 transition"
           >
             <FaGithub className="text-lg text-gray-900" />
@@ -102,7 +160,6 @@ const SignInPage = () => {
           </button>
         </div>
 
-        {/* সাইন আপ লিংক (এখানে /signup এর পরিবর্তে /sign-up করা হয়েছে) */}
         <div className="mt-6 text-center text-sm text-gray-600">
           অ্যাকাউন্ট নেই?{" "}
           <Link
@@ -114,7 +171,6 @@ const SignInPage = () => {
         </div>
       </div>
 
-      {/* হোম পেজে ফিরে যাওয়ার লিংক */}
       <div className="mt-6">
         <Link
           href="/"

@@ -1,4 +1,3 @@
-
 const PriceMarquee = async () => {
   let products = [];
 
@@ -10,7 +9,10 @@ const PriceMarquee = async () => {
       }
     );
 
-    if (!res.ok) throw new Error("Failed to fetch products");
+    // Error throw না করে সরাসরি null রিটার্ন করা হলো যাতে লেআউট ক্র্যাশ না করে
+    if (!res.ok) {
+      return null;
+    }
 
     const result = await res.json();
 
@@ -52,8 +54,8 @@ const PriceMarquee = async () => {
                     isDown
                       ? "text-red-600"
                       : isUp
-                        ? "text-green-600"
-                        : "text-gray-500"
+                      ? "text-green-600"
+                      : "text-gray-500"
                   }`}
                 >
                   {isDown ? "▼" : isUp ? "▲" : "—"}{" "}
@@ -64,11 +66,8 @@ const PriceMarquee = async () => {
           );
         })}
       </div>
-
-
     </section>
   );
 };
 
 export default PriceMarquee;
-

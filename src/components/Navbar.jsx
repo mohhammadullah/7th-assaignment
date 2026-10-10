@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useSyncExternalStore } from "react";
 import Image from "next/image";
+import UserInfo from "./UserInfo";
 
 const getDate = () =>
   new Date().toLocaleDateString("bn-BD", {
@@ -46,18 +47,7 @@ const Navbar = ({ children }) => {
         </div>
 
         <div className="flex shrink-0 items-center gap-1 sm:gap-3">
-          <Link
-            href="/sign-in"
-            className="btn btn-ghost btn-xs text-xs text-gray-800 sm:btn-sm sm:text-sm"
-          >
-            সাইন ইন
-          </Link>
-          <Link
-            href="/sign-up"
-            className="btn btn-xs border-green-700 bg-green-700 text-xs text-white hover:bg-green-800 sm:btn-sm sm:text-sm"
-          >
-            সাইন আপ
-          </Link>
+        <UserInfo></UserInfo>
         </div>
       </nav>
       {children}

@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -44,12 +43,12 @@ export default function SignUpPage() {
     }
 
     if (formData.password.length < 8) {
-      toast.error("পাসওয়ার্ড কমপক্ষে ৮ অক্ষরের হতে হবে।");
+      toast.error("পাসওয়ার্ড কমপক্ষে ৮ অক্ষরের হতে হবে।");
       return;
     }
 
     if (formData.password !== formData.confirmPassword) {
-      toast.error("দুটি পাসওয়ার্ড মিলছে না!");
+      toast.error("দুটি পাসওয়ার্ড মিলছে না!");
       return;
     }
 
@@ -66,7 +65,7 @@ export default function SignUpPage() {
       if (error) {
         toast.update(toastId, {
           render:
-            error.message || "অ্যাকাউন্ট তৈরি করা যায়নি। আবার চেষ্টা করুন।",
+            error.message || "অ্যাকাউন্ট তৈরি করা যায়নি। আবার চেষ্টা করুন।",
           type: "error",
           isLoading: false,
           autoClose: 3500,
@@ -76,7 +75,7 @@ export default function SignUpPage() {
 
       if (!data) {
         toast.update(toastId, {
-          render: "সার্ভার থেকে সঠিক উত্তর পাওয়া যায়নি।",
+          render: "সার্ভার থেকে সঠিক উত্তর পাওয়া যায়নি।",
           type: "error",
           isLoading: false,
           autoClose: 3000,
@@ -85,20 +84,20 @@ export default function SignUpPage() {
       }
 
       toast.update(toastId, {
-        render: "অ্যাকাউন্ট তৈরি হয়েছে! এখন সাইন ইন করুন।",
+        render: "অ্যাকাউন্ট তৈরি হয়েছে! এখন সাইন ইন করুন।",
         type: "success",
         isLoading: false,
         autoClose: 2000,
       });
 
       setTimeout(() => {
-        router.push("/");
+        router.push("/sign-in");
       }, 1000);
     } catch (error) {
       console.error("Signup error:", error);
 
       toast.update(toastId, {
-        render: "সমস্যা হয়েছে। ইন্টারনেট বা সার্ভার পরীক্ষা করুন।",
+        render: "সমস্যা হয়েছে। ইন্টারনেট বা সার্ভার পরীক্ষা করুন।",
         type: "error",
         isLoading: false,
         autoClose: 3500,
@@ -108,10 +107,18 @@ export default function SignUpPage() {
     }
   };
 
-  const handleSocialSignup = (provider) => {
-    toast.info(
-      `${provider} দিয়ে সাইন আপ করার সুবিধাটি এখনো চালু করা হয়নি।`
-    );
+
+  const handleSocialSignup = async (provider) => {
+    try {
+      toast.loading(`${provider} দিয়ে সংযোগ করা হচ্ছে...`, { toastId: "social" });
+      await authClient.signIn.social({
+        provider: provider.toLowerCase(),
+        callbackURL: "/",
+      });
+    } catch (error) {
+      toast.dismiss("social");
+      toast.error(`${provider} দিয়ে সাইন আপ করতে সমস্যা হয়েছে।`);
+    }
   };
 
   return (
@@ -172,7 +179,7 @@ export default function SignUpPage() {
               htmlFor="password"
               className="mb-1 block text-sm font-semibold"
             >
-              পাসওয়ার্ড
+              পাসওয়ার্ড
             </label>
             <input
               id="password"
@@ -193,7 +200,7 @@ export default function SignUpPage() {
               htmlFor="confirmPassword"
               className="mb-1 block text-sm font-semibold"
             >
-              পাসওয়ার্ড নিশ্চিত করুন
+              পাসওয়ার্ড নিশ্চিত করুন
             </label>
             <input
               id="confirmPassword"
@@ -202,7 +209,7 @@ export default function SignUpPage() {
               autoComplete="new-password"
               value={formData.confirmPassword}
               onChange={handleChange}
-              placeholder="আবার পাসওয়ার্ড লিখুন"
+              placeholder="আবার পাসওয়ার্ড লিখুন"
               minLength={8}
               className="w-full rounded-lg border border-gray-200 bg-[#fafafa] px-4 py-3 text-sm outline-none focus:border-green-600"
               required
@@ -267,4 +274,3 @@ export default function SignUpPage() {
     </main>
   );
 }
-
