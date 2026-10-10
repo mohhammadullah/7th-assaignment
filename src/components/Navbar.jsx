@@ -3,7 +3,6 @@ import Link from "next/link";
 import { useSyncExternalStore } from "react";
 import Image from "next/image";
 
-
 const getDate = () =>
   new Date().toLocaleDateString("bn-BD", {
     dateStyle: "full",
@@ -47,21 +46,23 @@ const Navbar = ({ children }) => {
         </div>
 
         <div className="flex shrink-0 items-center gap-1 sm:gap-3">
-          <button className="btn btn-ghost btn-xs text-xs text-gray-800 sm:btn-sm sm:text-sm">
+          <Link
+            href="/sign-in"
+            className="btn btn-ghost btn-xs text-xs text-gray-800 sm:btn-sm sm:text-sm"
+          >
             সাইন ইন
-          </button>
-
-          <button className="btn btn-xs border-green-700 bg-green-700 text-xs text-white hover:bg-green-800 sm:btn-sm sm:text-sm">
+          </Link>
+          <Link
+            href="/sign-up"
+            className="btn btn-xs border-green-700 bg-green-700 text-xs text-white hover:bg-green-800 sm:btn-sm sm:text-sm"
+          >
             সাইন আপ
-          </button>
+          </Link>
         </div>
       </nav>
-{children}
+      {children}
     </header>
   );
 };
 
 export default Navbar;
-
-
-
