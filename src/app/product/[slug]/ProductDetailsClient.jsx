@@ -21,7 +21,7 @@ export default function ProductDetailsClient({ params }) {
   useEffect(() => {
     async function fetchProduct() {
       try {
-        const res = await fetch("https://api.abcz.workers.dev/api/bazardor/products");
+        const res = await fetch("https://openapi.programming-hero.com/api/bazardor/products");
         if (res.ok) {
           const data = await res.json();
           const allItems = Array.isArray(data) ? data : data.products || [];

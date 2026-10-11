@@ -15,17 +15,23 @@ export default function ProfilePage() {
   const [isUpdating, setIsUpdating] = useState(false);
 
  const handleLogout = async () => {
-    try {
-      toast.loading("লগআউট হচ্ছে...", { toastId: "logout" });
-      await authClient.signOut();
-      toast.dismiss("logout");
-      toast.success("সফলভাবে লগআউট হয়েছে!");
-      router.push("/sign-in");
-    } catch (err) {
-      toast.dismiss("logout");
-      toast.error("লগআউট করতে সমস্যা হয়েছে।");
+  try {
+    const { error } = await authClient.signOut();
+
+    if (error) {
+      toast.error("লগআউট করতে সমস্যা হয়েছে!");
+      return;
     }
-  };
+
+    toast.success("সফলভাবে লগআউট হয়েছে!");
+
+    setTimeout(() => {
+      router.push("/sign-in");
+    }, 1000);
+  } catch (err) {
+    toast.error("লগআউট করতে সমস্যা হয়েছে!");
+  }
+};
 
   const handleUpdate = async (e) => {
     e.preventDefault();

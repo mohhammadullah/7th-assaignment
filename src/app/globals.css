@@ -3,7 +3,17 @@
 @import "@heroui/styles"; 
 @plugin "daisyui";
 
-@keyframes price-marquee {
+
+.marquee-track {
+  animation: marquee-scroll 35s linear infinite;
+  will-change: transform;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-scroll {
   from {
     transform: translateX(0);
   }
@@ -13,10 +23,8 @@
   }
 }
 
-.marquee-track {
-  animation: price-marquee 60s linear infinite;
-}
-
-.marquee-track:hover {
-  animation-play-state: paused;
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
 }

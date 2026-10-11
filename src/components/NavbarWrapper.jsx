@@ -1,11 +1,28 @@
 
+import { Suspense } from "react";
+import NavLinks from "@/components/NavLinks";
+import PriceMarquee from "@/components/marquee";
 import Navbar from "./Navbar";
-import NavLinks from "./NavLinks";
 
 export default function NavbarWrapper() {
   return (
-    <Navbar>
-      <NavLinks />
-    </Navbar>
+    <>
+      <Navbar />
+
+      <Suspense
+        fallback={
+          <div className="h-12 bg-white" />
+        }
+      >
+        <NavLinks />
+      </Suspense>
+
+      <Suspense
+        fallback={<div className="h-8 bg-white" />}
+      >
+        <PriceMarquee />
+      </Suspense>
+    </>
   );
 }
+

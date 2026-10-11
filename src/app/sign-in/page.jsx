@@ -19,7 +19,6 @@ const SignInPage = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -30,19 +29,20 @@ const SignInPage = () => {
           email: formData.email,
           password: formData.password,
         },
+  
         {
           onRequest: () => {
             toast.loading("লগইন হচ্ছে...", { id: "login" });
           },
           onSuccess: () => {
             toast.dismiss("login");
-            toast.success("সফলভাবে লগইন হয়েছে!");
+            toast.success("সফলভাবে লগইন হয়েছে!");
             router.push("/"); 
             router.refresh();
           },
           onError: (ctx) => {
             toast.dismiss("login");
-            toast.error(ctx.error.message || "লগইন করতে সমস্যা হয়েছে। দয়া করে আবার চেষ্টা করুন।");
+            toast.error(ctx.error.message || "লগইন করতে সমস্যা হয়েছে। দয়া করে আবার চেষ্টা করুন।");
           },
         }
       );
@@ -52,8 +52,8 @@ const SignInPage = () => {
     } finally {
       setLoading(false);
     }
+          console.log(data);
   };
-
 
   const handleGoogleSignIn = async () => {
     try {
@@ -62,7 +62,7 @@ const SignInPage = () => {
         callbackURL: "/", 
       });
     } catch (err) {
-      toast.error("Google দিয়ে লগইন করতে সমস্যা হয়েছে।");
+      toast.error("Google দিয়ে লগইন করতে সমস্যা হয়েছে।");
     }
   };
 
@@ -74,13 +74,12 @@ const SignInPage = () => {
         callbackURL: "/",
       });
     } catch (err) {
-      toast.error("GitHub দিয়ে লগইন করতে সমস্যা হয়েছে।");
+      toast.error("GitHub দিয়ে লগইন করতে সমস্যা হয়েছে।");
     }
   };
 
   return (
     <div className="min-h-screen bg-[#f3f5f3] flex flex-col items-center justify-center p-4 font-sans text-gray-800">
-   
       <Toaster position="top-center" reverseOrder={false} />
 
       <div className="text-center mb-6">
@@ -144,7 +143,7 @@ const SignInPage = () => {
           <button
             type="button"
             onClick={handleGoogleSignIn}
-            className="flex items-center justify-center gap-2 border border-gray-200 rounded-lg py-2.5 text-xs font-semibold text-gray-800 hover:bg-gray-50 transition"
+            className="flex items-center justify-center gap-2 border border-gray-200 rounded-lg py-2.5 text-xs font-semibold text-gray-800 hover:bg-gray-50 transition cursor-pointer"
           >
             <FcGoogle className="text-lg" />
             <span>Google দিয়ে চালিয়ে যান</span>
@@ -153,7 +152,7 @@ const SignInPage = () => {
           <button
             type="button"
             onClick={handleGithubSignIn}
-            className="flex items-center justify-center gap-2 border border-gray-200 rounded-lg py-2.5 text-xs font-semibold text-gray-800 hover:bg-gray-50 transition"
+            className="flex items-center justify-center gap-2 border border-gray-200 rounded-lg py-2.5 text-xs font-semibold text-gray-800 hover:bg-gray-50 transition cursor-pointer"
           >
             <FaGithub className="text-lg text-gray-900" />
             <span>GitHub দিয়ে চালিয়ে যান</span>

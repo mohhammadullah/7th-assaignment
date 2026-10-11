@@ -1,5 +1,5 @@
 "use client";
-
+import { toast } from "react-toastify";
 import { authClient } from "@/lib/auth-client";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,15 +11,22 @@ const UserInfo = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleLogout = async () => {
-    await authClient.signOut();
-    setIsOpen(false);
+    try {
+      const { error } = await authClient.signOut();
+      if (error) {
+        toast.error("লগআউট করতে সমস্যা হয়েছে!");
+        return;
+      }
+      setIsOpen(false);
+      toast.success("সফলভাবে লগআউট হয়েছে!");
+    } catch (error) {
+      toast.error("লগআউট করতে সমস্যা হয়েছে!");
+    }
   };
-
   return (
     <div className="relative flex items-center gap-2.5">
       {user ? (
         <div className="relative">
-         
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="flex items-center gap-2 rounded-lg p-1 hover:bg-gray-100"
@@ -39,16 +46,13 @@ const UserInfo = () => {
             <span className="text-xs">▼</span>
           </button>
 
-  
           {isOpen && (
             <div className="absolute right-0 top-full z-50 mt-2 w-48 rounded-2xl border border-gray-100 bg-white p-3 shadow-lg">
               <div className="border-b pb-2">
                 <p className="truncate text-sm font-semibold text-gray-800">
                   {user.name}
                 </p>
-                <p className="truncate text-xs text-gray-500">
-                  {user.email}
-                </p>
+                <p className="truncate text-xs text-gray-500">{user.email}</p>
               </div>
 
               <div className="mt-2 flex flex-col gap-1">
