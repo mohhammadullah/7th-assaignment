@@ -20,4 +20,8 @@ export const auth = betterAuth({
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
     },
   },
+  trustedOrigins: [
+  "http://localhost:3000",
+"https://bazar-dor-three-lime.vercel.app"
+],
 });
