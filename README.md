@@ -1,60 +1,43 @@
-# Bazar Dor 🛒
+# 🛒 বাজার দর | BazarDor
 
-**Bazar Dor** is a web application that helps users explore daily market prices in Bangladesh, compare price changes, and browse products by category.
+**BazarDor** is a web application that helps users explore market prices in Bangladesh, compare price changes, and browse products by category.
 
-## ✨ Features
+## 🛠️ Technologies Used
 
-* Responsive design for mobile, tablet, and desktop
-* Daily market price information
-* Products with increasing and decreasing prices
-* Product browsing by category
-* Product details pages
-* User authentication with Better Auth
-* Google and GitHub social login
-* Loading and error states
+* **Next.js** — React framework for web development
+* **React** — Building interactive user interfaces
+* **Tailwind CSS** — Responsive and modern styling
+* **Better Auth** — User authentication
+* **MongoDB** — Database
+* **Vercel** — Deployment platform
 
-## 🛠️ Tech Stack
+## ✨ Key Features
 
-* Next.js
-* React
-* Tailwind CSS
-* Better Auth
-* MongoDB
-* Vercel
+1. **Market Price Updates** — Explore product prices and market trends.
+2. **Price Comparison** — Browse products with increasing and decreasing prices.
+3. **Product Categories** — Find products by category.
+4. **Product Details** — View individual product information and prices.
+5. **User Authentication** — Sign up and sign in with Better Auth, with Google and GitHub login support.
 
 ## 🚀 Getting Started
 
-Clone the repository:
+Clone the repository and install dependencies:
 
 ```bash
 git clone YOUR_REPOSITORY_URL
 cd bazar-dor
-```
-
-Install dependencies:
-
-```bash
 npm install
-```
-
-Create a `.env.local` file and configure the required environment variables for authentication, MongoDB, and OAuth providers.
-
-Run the development server:
-
-```bash
 npm run dev
 ```
 
-Open http://localhost:3000 in your browser.
+Open http://localhost:3000 to view the application.
+
+Configure the required environment variables in `.env.local` before using database and authentication features.
 
 ## 🌐 Live Demo
 
-[Visit Bazar Dor](https://bazar-dor-three-lime.vercel.app/)
+[Visit BazarDor](https://bazar-dor-three-lime.vercel.app/)
 
-## 🔐 Environment Variables
+---
 
-Keep your credentials and secret keys in environment variables. Never commit `.env.local` or expose sensitive credentials in your repository.
-
-## 📄 License
-
-This project is developed for learning and web development purposes.
+**BazarDor — Making market prices easier to explore.**
