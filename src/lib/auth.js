@@ -22,10 +22,9 @@ export const auth = betterAuth({
   },
 
 trustedOrigins: [
-  "https://bazar-hncw7sei0-rafat-dots-projects.vercel.app",
-  "https://bazar-d9s13y4uq-rafat-dots-projects.vercel.app",
+  "https://bazar-k32ky18zn-rafat-dots-projects.vercel.app",
   "http://localhost:3000",
-  "https://bazar-ksm4yl0oi-rafat-dots-projects.vercel.app"
+
 ],
 
   socialProviders: {
