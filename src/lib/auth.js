@@ -3,7 +3,7 @@ import { mongodbAdapter } from "@better-auth/mongo-adapter";
 import { MongoClient } from "mongodb";
 
 const client = new MongoClient(process.env.MONGODB_URL);
-const db = client.db("bajar-dor"); // তোমার ডাটাবেজের নাম
+const db = client.db("bagar-dor"); // তোমার ডাটাবেজের নাম
 
 export const auth = betterAuth({
   database: mongodbAdapter(db),
